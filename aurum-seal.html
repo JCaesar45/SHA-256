@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Aurum Seal – Prove it was yours first</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0e1d1a;
+        --bg2: #142a25;
+        --ink: #f1eadb;
+        --mute: #a9b7ae;
+        --gold: #c9a96a;
+        --gold2: #e6cf9c;
+        --wine: #6b2434;
+        --line: rgba(201, 169, 106, 0.28);
+        --cell: rgba(241, 234, 219, 0.07);
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) {
+          --bg: #f4efe3;
+          --bg2: #ebe3d0;
+          --ink: #1b2a26;
+          --mute: #566a62;
+          --gold: #8f6d2c;
+          --gold2: #6f5220;
+          --wine: #6b2434;
+          --line: rgba(143, 109, 44, 0.35);
+          --cell: rgba(27, 42, 38, 0.08);
+        }
+      }
+      :root[data-theme="light"] {
+        --bg: #f4efe3;
+        --bg2: #ebe3d0;
+        --ink: #1b2a26;
+        --mute: #566a62;
+        --gold: #8f6d2c;
+        --gold2: #6f5220;
+        --line: rgba(143, 109, 44, 0.35);
+        --cell: rgba(27, 42, 38, 0.08);
+      }
+      html {
+        height: 100%;
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+        color-scheme: dark light;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          400 1.0625rem/1.6 "Hanken Grotesk",
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 400;
+        line-height: 1.05;
+        margin: 0;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+      .wrap {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 clamp(1.25rem, 4vw, 3rem);
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.6rem 0;
+      }
+      .logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+      }
+      nav a {
+        margin-left: 1.6rem;
+        text-decoration: none;
+        color: var(--mute);
+        font-size: 0.95rem;
+      }
+      nav a:hover {
+        color: var(--gold);
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: clamp(2rem, 5vw, 4.5rem);
+        align-items: center;
+        padding: 3rem 0 5rem;
+      }
+      .hero h1 {
+        font-size: clamp(2.9rem, 6.4vw, 5.6rem);
+        font-style: italic;
+        letter-spacing: -0.01em;
+      }
+      .hero p.lead {
+        max-width: 34rem;
+        color: var(--mute);
+        margin: 1.5rem 0 2rem;
+      }
+      .btn {
+        display: inline-block;
+        background: var(--gold);
+        color: #1a140a;
+        border: 0;
+        padding: 0.95rem 1.7rem;
+        font:
+          600 1rem "Hanken Grotesk",
+          sans-serif;
+        border-radius: 2px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: var(--gold2);
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--line);
+        margin-left: 0.6rem;
+      }
+      .btn.ghost:hover {
+        border-color: var(--gold);
+        background: transparent;
+      }
+      .seal {
+        background: var(--bg2);
+        border: 1px solid var(--line);
+        padding: 1.6rem;
+        border-radius: 4px;
+      }
+      .seal label {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--mute);
+        margin-bottom: 0.5rem;
+      }
+      textarea,
+      input[type="email"] {
+        width: 100%;
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        font: inherit;
+        padding: 0.8rem;
+        border-radius: 2px;
+        resize: vertical;
+      }
+      textarea {
+        min-height: 5.2rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(32, 1fr);
+        gap: 3px;
+        margin: 1.3rem 0 0.8rem;
+      }
+      .grid i {
+        aspect-ratio: 1;
+        background: var(--cell);
+        border-radius: 1px;
+        transition:
+          background 0.25s,
+          transform 0.25s;
+      }
+      .grid i.on {
+        background: var(--gold);
+        transform: scale(1.05);
+      }
+      .digest {
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.82rem;
+        word-break: break-all;
+        color: var(--gold2);
+        margin: 0;
+        min-height: 2.6em;
+      }
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        color: var(--mute);
+        margin-top: 0.9rem;
+      }
+      .meta button {
+        background: none;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        padding: 0.35rem 0.8rem;
+        border-radius: 2px;
+        cursor: pointer;
+        font: inherit;
+      }
+      .meta button[aria-pressed="true"] {
+        border-color: var(--gold);
+        color: var(--gold2);
+      }
+      section {
+        padding: 4.5rem 0;
+        border-top: 1px solid var(--line);
+      }
+      section h2 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        max-width: 22ch;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.4rem;
+        margin-top: 2.6rem;
+      }
+      .cols h3 {
+        font-size: 1.7rem;
+        margin-bottom: 0.6rem;
+      }
+      .cols p {
+        color: var(--mute);
+        margin: 0;
+      }
+      .tiers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.4rem;
+        margin-top: 2.6rem;
+      }
+      .tier {
+        border: 1px solid var(--line);
+        padding: 2rem 1.7rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+      .tier.pick {
+        background: var(--bg2);
+        border-color: var(--gold);
+      }
+      .tier .price {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.8rem;
+      }
+      .tier ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: var(--mute);
+        flex: 1;
+      }
+      .tier li {
+        padding: 0.4rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      form.join {
+        display: flex;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        max-width: 34rem;
+      }
+      form.join input {
+        flex: 1 1 15rem;
+      }
+      #msg {
+        min-height: 1.6em;
+        margin-top: 0.8rem;
+        color: var(--gold2);
+      }
+      footer {
+        padding: 2.5rem 0 3rem;
+        border-top: 1px solid var(--line);
+        color: var(--mute);
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .badge {
+        display: inline-block;
+        margin-top: 2rem;
+        font-size: 0.88rem;
+        color: var(--mute);
+      }
+      .badge b {
+        color: var(--gold2);
+        font-weight: 500;
+      }
+      @media (max-width: 860px) {
+        .hero,
+        .cols,
+        .tiers {
+          grid-template-columns: 1fr;
+        }
+        nav a:not(:last-child) {
+          display: none;
+        }
+        .grid {
+          grid-template-columns: repeat(16, 1fr);
+        }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .hero .seal {
+          animation: rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        }
+        @keyframes rise {
+          from {
+            opacity: 0;
+            transform: translateY(22px);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="logo" href="#top">Aurum Seal</a>
+        <nav aria-label="Primary">
+          <a href="#how">How it works</a>
+          <a href="#plans">Plans</a>
+          <a href="#join">Request access</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <div class="hero">
+          <div>
+            <h1>Prove it was yours, and when.</h1>
+            <p class="lead">
+              Aurum Seal turns any contract, design file or idea into a 256-bit
+              fingerprint that no one can forge or reverse. Keep the
+              fingerprint, keep your proof.
+            </p>
+            <a class="btn" href="#join">Request access</a>
+            <a class="btn ghost" href="#how">See how sealing works</a>
+            <div class="badge" id="badge" role="status">
+              Checking the hash engine…
+            </div>
+          </div>
+
+          <div class="seal">
+            <label for="src">Type anything to seal it</label>
+            <textarea id="src" spellcheck="false">
+The Ashgrove Lease, signed 11 November 2026</textarea>
+            <div class="grid" id="grid" aria-hidden="true"></div>
+            <p class="digest" id="digest" aria-live="polite"></p>
+            <div class="meta">
+              <span id="bits"></span>
+              <span>
+                <button id="flip" aria-pressed="false">
+                  Change one character
+                </button>
+                <button id="copy">Copy fingerprint</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <section id="how">
+          <h2>One changed letter rewrites the whole fingerprint.</h2>
+          <div class="cols">
+            <div>
+              <h3>Seal</h3>
+              <p>
+                Your file is hashed on your own device with SHA-256. Only the
+                fingerprint ever leaves it, never the document.
+              </p>
+            </div>
+            <div>
+              <h3>Stamp</h3>
+              <p>
+                We record the fingerprint with a trusted timestamp, so the date
+                of sealing can be shown to anyone who asks.
+              </p>
+            </div>
+            <div>
+              <h3>Verify</h3>
+              <p>
+                Anyone holding the original can re-hash it and match the
+                fingerprint. A single altered byte fails the match.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="plans">
+          <h2>Choose how many things you need to protect.</h2>
+          <div class="tiers">
+            <div class="tier">
+              <h3>Atelier</h3>
+              <div class="price">$0</div>
+              <ul>
+                <li>25 seals per month</li>
+                <li>Verification page</li>
+                <li>Email receipts</li>
+              </ul>
+              <a
+                class="btn ghost"
+                style="margin: 0; text-align: center"
+                href="#join"
+              >
+                Start free
+              </a>
+            </div>
+            <div class="tier pick">
+              <h3>Maison</h3>
+              <div class="price">$29</div>
+              <ul>
+                <li>2,000 seals per month</li>
+                <li>Batch sealing for folders</li>
+                <li>Branded certificates</li>
+                <li>API access</li>
+              </ul>
+              <a class="btn" style="text-align: center" href="#join">
+                Request access
+              </a>
+            </div>
+            <div class="tier">
+              <h3>Heritage</h3>
+              <div class="price">Custom</div>
+              <ul>
+                <li>Unlimited seals</li>
+                <li>Single sign-on</li>
+                <li>Audit export</li>
+                <li>Named support lead</li>
+              </ul>
+              <a
+                class="btn ghost"
+                style="margin: 0; text-align: center"
+                href="#join"
+              >
+                Talk to us
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="join">
+          <h2>Seal your first document this week.</h2>
+          <form class="join" id="form" novalidate>
+            <input
+              type="email"
+              id="email"
+              placeholder="you@company.com"
+              aria-label="Email address"
+              required
+            />
+            <button class="btn" type="submit">Request access</button>
+          </form>
+          <div id="msg" role="status"></div>
+        </section>
+      </main>
+
+      <footer>
+        <span>Aurum Seal, hashing done in your browser.</span>
+        <span>SHA-256 per FIPS 180-4</span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+        var K = new Uint32Array([
+          0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b,
+          0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01,
+          0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7,
+          0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
+          0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, 0x983e5152,
+          0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+          0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc,
+          0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+          0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819,
+          0xd6990624, 0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08,
+          0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
+          0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+          0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+        ]);
+        function rotr(x, n) {
+          return (x >>> n) | (x << (32 - n));
+        }
+        function sha256(str) {
+          var src = new TextEncoder().encode(str),
+            len = src.length;
+          var total = ((len + 9 + 63) >> 6) << 6,
+            buf = new Uint8Array(total);
+          buf.set(src);
+          buf[len] = 0x80;
+          var dv = new DataView(buf.buffer),
+            bitLen = len * 8;
+          dv.setUint32(total - 8, Math.floor(bitLen / 4294967296));
+          dv.setUint32(total - 4, bitLen >>> 0);
+          var H = new Uint32Array([
+            0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f,
+            0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+          ]);
+          var w = new Uint32Array(64);
+          for (var o = 0; o < total; o += 64) {
+            for (var i = 0; i < 16; i++) w[i] = dv.getUint32(o + i * 4);
+            for (i = 16; i < 64; i++) {
+              var s0 =
+                rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+              var s1 =
+                rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+              w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+            }
+            var a = H[0],
+              b = H[1],
+              c = H[2],
+              d = H[3],
+              e = H[4],
+              f = H[5],
+              g = H[6],
+              h = H[7];
+            for (i = 0; i < 64; i++) {
+              var S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25),
+                ch = (e & f) ^ (~e & g);
+              var t1 = (h + S1 + ch + K[i] + w[i]) >>> 0;
+              var S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22),
+                mj = (a & b) ^ (a & c) ^ (b & c);
+              var t2 = (S0 + mj) >>> 0;
+              h = g;
+              g = f;
+              f = e;
+              e = (d + t1) >>> 0;
+              d = c;
+              c = b;
+              b = a;
+              a = (t1 + t2) >>> 0;
+            }
+            H[0] += a;
+            H[1] += b;
+            H[2] += c;
+            H[3] += d;
+            H[4] += e;
+            H[5] += f;
+            H[6] += g;
+            H[7] += h;
+          }
+          return Array.prototype.map
+            .call(H, function (x) {
+              return ("00000000" + x.toString(16)).slice(-8);
+            })
+            .join("");
+        }
+        var vectors = [
+          [
+            "",
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          ],
+          [
+            "abc",
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+          ],
+          [
+            "Rosetta code",
+            "764faf5c61ac315f1497f9dfa542713965b785e5cc2f707d6468d7d1124cdfcf"
+          ]
+        ];
+        var $ = function (id) {
+          return document.getElementById(id);
+        };
+        var ok = vectors.every(function (v) {
+          return sha256(v[0]) === v[1];
+        });
+        $("badge").innerHTML = ok
+          ? "Hash engine self-test: <b>passed</b> on 3 reference inputs."
+          : "Hash engine self-test: <b>failed</b>. Do not rely on results.";
+
+        var grid = $("grid"),
+          cells = [];
+        for (var n = 0; n < 256; n++) {
+          var c = document.createElement("i");
+          grid.appendChild(c);
+          cells.push(c);
+        }
+        function bitsOf(hex) {
+          var out = [];
+          for (var i = 0; i < hex.length; i++) {
+            var v = parseInt(hex[i], 16);
+            for (var k = 3; k >= 0; k--) out.push((v >> k) & 1);
+          }
+          return out;
+        }
+        var flipped = false,
+          last = "";
+        function render() {
+          var text = $("src").value,
+            hex = sha256(text);
+          $("digest").textContent = hex;
+          last = hex;
+          var a = bitsOf(hex),
+            b = bitsOf(sha256(text + "."));
+          var diff = 0;
+          for (var i = 0; i < 256; i++) {
+            var on = flipped ? a[i] !== b[i] : a[i] === 1;
+            cells[i].className = on ? "on" : "";
+            if (a[i] !== b[i]) diff++;
+          }
+          $("bits").textContent = flipped
+            ? diff + " of 256 bits change when one character is added."
+            : a.reduce(function (s, x) {
+                return s + x;
+              }, 0) + " of 256 bits are set in this fingerprint.";
+        }
+        $("src").addEventListener("input", render);
+        $("flip").addEventListener("click", function () {
+          flipped = !flipped;
+          this.setAttribute("aria-pressed", String(flipped));
+          this.textContent = flipped
+            ? "Show fingerprint"
+            : "Change one character";
+          render();
+        });
+        $("copy").addEventListener("click", function () {
+          var btn = this,
+            done = function () {
+              btn.textContent = "Copied";
+              setTimeout(function () {
+                btn.textContent = "Copy fingerprint";
+              }, 1400);
+            };
+          try {
+            navigator.clipboard.writeText(last).then(done, function () {
+              btn.textContent = "Select and copy manually";
+            });
+          } catch (e) {
+            btn.textContent = "Select and copy manually";
+          }
+        });
+        $("form").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var v = $("email").value.trim(),
+            m = $("msg");
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+            m.textContent =
+              "Enter a valid email address, for example you@company.com.";
+            $("email").focus();
+            return;
+          }
+          m.textContent =
+            "Request noted for " +
+            v +
+            ". We will reply within two working days.";
+          this.reset();
+        });
+        render();
+      })();
+    </script>
+  </body>
+</html>
