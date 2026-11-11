@@ -15,16 +15,6 @@ Your document never leaves your machine. Only its 64-character fingerprint does.
 Tamper with any past entry and every link after it stops matching, which
 `GET /api/ledger` reports as `"intact": false`.
 
-## Project layout
-
-```
-aurum-seal/
-├─ public/index.html        landing page with a live SHA-256 sealing demo
-├─ src/index.ts             TypeScript HTTP API and static server
-├─ tools/aurum.py           Python CLI: hash, seal, verify, merkle
-├─ java/SealClient.java     Java 17 client: hash, seal, verify
-└─ data/ledger.json         created on first seal
-```
 
 ## Run it
 
